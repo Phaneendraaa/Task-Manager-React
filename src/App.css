@@ -8,7 +8,7 @@
   align-items: flex-start;
   justify-content: center;
   padding: 60px 20px;
-  background: #f4f5f7;
+  background: #fdf2f6;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -17,14 +17,14 @@
   max-width: 480px;
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(236, 64, 122, 0.12);
   padding: 28px;
 }
 
 h1 {
   margin: 0 0 20px;
   font-size: 24px;
-  color: #1f2933;
+  color: #831843;
   text-align: center;
 }
 
@@ -37,28 +37,28 @@ h1 {
 .task-form input {
   flex: 1;
   padding: 10px 12px;
-  border: 1px solid #d3d7de;
+  border: 1px solid #f3c6db;
   border-radius: 8px;
   font-size: 15px;
   outline: none;
 }
 
 .task-form input:focus {
-  border-color: #4f7cff;
+  border-color: #ec4899;
 }
 
 .task-form button {
   padding: 10px 16px;
   border: none;
   border-radius: 8px;
-  background: #4f7cff;
+  background: #ec4899;
   color: white;
   font-size: 15px;
   cursor: pointer;
 }
 
 .task-form button:hover {
-  background: #3d67e0;
+  background: #db2777;
 }
 
 .filters {
@@ -70,17 +70,17 @@ h1 {
 .filters button {
   flex: 1;
   padding: 6px 8px;
-  border: 1px solid #d3d7de;
+  border: 1px solid #f3c6db;
   background: white;
   border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
-  color: #52606d;
+  color: #9d174d;
 }
 
 .filters button.active {
-  background: #4f7cff;
-  border-color: #4f7cff;
+  background: #ec4899;
+  border-color: #ec4899;
   color: white;
 }
 
@@ -97,12 +97,12 @@ h1 {
   align-items: center;
   justify-content: space-between;
   padding: 10px 4px;
-  border-bottom: 1px solid #eef0f3;
+  border-bottom: 1px solid #fce7f3;
 }
 
 .task-list li.empty {
   justify-content: center;
-  color: #9aa5b1;
+  color: #f0abc4;
   padding: 24px 0;
   border-bottom: none;
 }
@@ -119,29 +119,30 @@ h1 {
   width: 18px;
   height: 18px;
   cursor: pointer;
+  accent-color: #ec4899;
 }
 
 .task-list li span {
   font-size: 15px;
-  color: #1f2933;
+  color: #831843;
 }
 
 .task-list li.completed span {
   text-decoration: line-through;
-  color: #9aa5b1;
+  color: #f0abc4;
 }
 
 .delete-btn {
   background: none;
   border: none;
-  color: #c94b4b;
+  color: #db2777;
   font-size: 16px;
   cursor: pointer;
   padding: 4px 8px;
 }
 
 .delete-btn:hover {
-  color: #a63a3a;
+  color: #9d174d;
 }
 
 .footer {
@@ -150,15 +151,15 @@ h1 {
   align-items: center;
   margin-top: 16px;
   padding-top: 12px;
-  border-top: 1px solid #eef0f3;
+  border-top: 1px solid #fce7f3;
   font-size: 13px;
-  color: #52606d;
+  color: #9d174d;
 }
 
 .footer button {
   background: none;
   border: none;
-  color: #4f7cff;
+  color: #ec4899;
   cursor: pointer;
   font-size: 13px;
 }
