@@ -17,24 +17,18 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            set -e
+
             cd ~/Task-Manager-React
 
             echo "Pulling latest code..."
             git pull origin main
 
-            echo "Finding container using port 80..."
-            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80")
-
-            if [ -n "$CONTAINER_ID" ]; then
-              echo "Stopping container: $CONTAINER_ID"
-              sudo docker stop "$CONTAINER_ID"
-              sudo docker rm "$CONTAINER_ID"
-            else
-              echo "No container is using port 80"
-            fi
-
             echo "Building new Docker image..."
             sudo docker build -t task-manager:latest .
+
+            echo "Removing old task-manager container..."
+            sudo docker rm -f task-manager 2>/dev/null || true
 
             echo "Starting new container..."
             sudo docker run -d \
@@ -43,4 +37,7 @@ jobs:
               -p 80:80 \
               task-manager:latest
 
-            echo "Deployment complete!"
+            echo "Checking container..."
+            sudo docker ps --filter "name=task-manager"
+
+            echo "Deployment successful!"
