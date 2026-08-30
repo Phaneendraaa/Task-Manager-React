@@ -1,0 +1,18 @@
+# --- Common ---
+build --incompatible_enable_cc_toolchain_resolution
+common --enable_platform_specific_config
+
+# --- NativeLink remote cache only — no remote execution ---
+# Set NATIVELINK_API_KEY and NATIVELINK_CACHE_URL in your shell env; do not commit real keys.
+# NATIVELINK_CACHE_URL example: grpcs://cas-your-instance.build-faster.nativelink.net
+build:nativelink --remote_cache=${NATIVELINK_CACHE_URL}
+build:nativelink --remote_timeout=3600
+build:nativelink --remote_header=x-nativelink-api-key=${NATIVELINK_API_KEY}
+build:nativelink --remote_upload_local_results=true
+
+# Builds still execute locally; only build results are cached remotely.
+# Use: bazel build --config=nativelink //...
+build --config=nativelink
+
+# Test output
+test --test_output=errors

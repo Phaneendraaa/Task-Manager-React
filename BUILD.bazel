@@ -1,0 +1,30 @@
+load("@aspect_rules_js//js:defs.bzl", "js_run_binary")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+
+npm_link_all_packages(name = "node_modules")
+
+# Build the production bundle with Vite, mirroring `npm run build`.
+# Output lands in dist/ as declared outs below.
+js_run_binary(
+    name = "build",
+    srcs = [
+        "index.html",
+        "vite.config.js",
+        ":node_modules",
+    ] + glob([
+        "src/**/*.jsx",
+        "src/**/*.js",
+        "src/**/*.css",
+        "public/**",
+    ]),
+    outs = ["dist"],
+    args = ["run", "build"],
+    chdir = package_name(),
+    tool = ":node_modules/.bin/vite",
+)
+
+exports_files([
+    "package.json",
+    "Dockerfile",
+    "nginx.conf",
+])
