@@ -1,32 +1,46 @@
-- name: Deploy to EC2
-  uses: appleboy/ssh-action@v1
-  with:
-    host: ${{ secrets.EC2_HOST }}
-    username: ${{ secrets.EC2_USER }}
-    key: ${{ secrets.EC2_SSH_KEY }}
-    script: |
-      cd ~/Task-Manager-React
+name: Deploy to EC2
 
-      git pull origin main
+on:
+  push:
+    branches:
+      - main
 
-      echo "Finding container using port 80..."
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-      CONTAINER_ID=$(sudo docker ps -q --filter "publish=80")
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/Task-Manager-React
 
-      if [ -n "$CONTAINER_ID" ]; then
-        echo "Stopping container: $CONTAINER_ID"
-        sudo docker stop $CONTAINER_ID
-        sudo docker rm $CONTAINER_ID
-      else
-        echo "No container is using port 80"
-      fi
+            echo "Pulling latest code..."
+            git pull origin main
 
-      echo "Building new image..."
-      sudo docker build -t task-manager:latest .
+            echo "Finding container using port 80..."
+            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80")
 
-      echo "Starting new container..."
-      sudo docker run -d \
-        --name task-manager \
-        --restart unless-stopped \
-        -p 80:80 \
-        task-manager:latest
+            if [ -n "$CONTAINER_ID" ]; then
+              echo "Stopping container: $CONTAINER_ID"
+              sudo docker stop "$CONTAINER_ID"
+              sudo docker rm "$CONTAINER_ID"
+            else
+              echo "No container is using port 80"
+            fi
+
+            echo "Building new Docker image..."
+            sudo docker build -t task-manager:latest .
+
+            echo "Starting new container..."
+            sudo docker run -d \
+              --name task-manager \
+              --restart unless-stopped \
+              -p 80:80 \
+              task-manager:latest
+
+            echo "Deployment complete!"
